@@ -41,11 +41,6 @@ public class MainPage {
        return driver.findElement(By.xpath(elementText.replace("№",Integer.toString(elementNumber)))).getText();
     }
 
-//    // Проверка видимости текста выпадающего списка
-//    public boolean isElementTextVisible() {
-//        return driver.findElement(elementText).isDisplayed();
-//    }
-
     // Скролл к выпадающему списку
     public void scrollToQuestions() {
         WebElement element =  driver.findElement(questionsHeader);
