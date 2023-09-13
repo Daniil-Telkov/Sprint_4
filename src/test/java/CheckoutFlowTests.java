@@ -28,10 +28,11 @@ public class CheckoutFlowTests {
     String rentPeriod;
     String colour;
     String comment;
+    String purchaseButtonPosition;
     boolean orderSuccess;
 
     public CheckoutFlowTests(String name, String surname, String address, String metro, String phone, String date,
-                             String rentPeriod, String colour, String comment,boolean orderSuccess) {
+                             String rentPeriod, String colour, String comment,String purchaseButtonPosition,boolean orderSuccess) {
         this.name = name;
         this.surname = surname;
         this.address = address;
@@ -41,14 +42,15 @@ public class CheckoutFlowTests {
         this.rentPeriod = rentPeriod;
         this.colour = colour;
         this.comment = comment;
+        this.purchaseButtonPosition = purchaseButtonPosition;
         this.orderSuccess = orderSuccess;
     }
 
     @Parameterized.Parameters
     public static Object[][] getCustomerData() {
         return new Object[][] {
-                {"Имя","Фамилиев", "Бульвар 4", "Лубянка", "79077777777", "10.09.2023", "двое суток", "black", "my comment", true}
-                ,{"Тест","Тестфамилия", "Адрес 1", "Тропарёво", "79999999999", "24.09.2022", "сутки", "grey", "", true}
+                {"Имя","Фамилиев", "Бульвар 4", "Лубянка", "79077777777", "10.09.2023", "двое суток", "black", "my comment","top", true}
+                ,{"Тест","Тестфамилия", "Адрес 1", "Тропарёво", "79999999999", "24.09.2022", "сутки", "grey", "","bottom", true}
         };
     }
 
@@ -56,10 +58,7 @@ public class CheckoutFlowTests {
     public void startUp() {
         WebDriverManager.firefoxdriver().setup();
 //        WebDriverManager.chromedriver().clearDriverCache().setup();
-    }
 
-    @Test
-    public void PositiveCustomerScenarioPurchaseButtonTop() {
 //        ChromeOptions options = new ChromeOptions();
 //        options.addArguments("--no-sandbox", "--disable-dev-shm-usage");
 //        driver = new ChromeDriver(options);
@@ -68,37 +67,13 @@ public class CheckoutFlowTests {
         options.addArguments("--no-sandbox", "--disable-dev-shm-usage");
         driver = new FirefoxDriver(options);
         driver.get("https://qa-scooter.praktikum-services.ru/");
-
-        MainPage objMainPage = new MainPage(driver);
-        objMainPage.cookieAcceptButtonСlick();
-        objMainPage.purchaseButtonTopClick();
-
-        CustomerInformationPage objCustomerInformationPage = new CustomerInformationPage(driver);
-        objCustomerInformationPage.waitForLoadingPage();
-        objCustomerInformationPage.inputFieldsAndClickNextButton(name,surname, address, metro, phone);
-
-        RentInformationPage objRentInformationPage = new RentInformationPage(driver);
-        objRentInformationPage.waitForLoadingPage();
-        objRentInformationPage.inputFieldsAndClickPurchaseButton(date, rentPeriod, colour, comment);
-
-        assertEquals(orderSuccess, objRentInformationPage.isOrderStatusTextVisible());
     }
 
     @Test
-    public void PositiveCustomerScenarioPurchaseButtonBottom() {
-//        ChromeOptions options = new ChromeOptions();
-//        options.addArguments("--no-sandbox", "--disable-dev-shm-usage");
-//        driver = new ChromeDriver(options);
-
-        FirefoxOptions options = new FirefoxOptions();
-        options.addArguments("--no-sandbox", "--disable-dev-shm-usage");
-        driver = new FirefoxDriver(options);
-        driver.get("https://qa-scooter.praktikum-services.ru/");
-
+    public void positiveCustomerScenarioPurchaseButton() {
         MainPage objMainPage = new MainPage(driver);
-        objMainPage.scrollToPurchaseButtonBottom();
         objMainPage.cookieAcceptButtonСlick();
-        objMainPage.purchaseButtonBottomClick();
+        objMainPage.purchaseButtonClick(purchaseButtonPosition);
 
         CustomerInformationPage objCustomerInformationPage = new CustomerInformationPage(driver);
         objCustomerInformationPage.waitForLoadingPage();

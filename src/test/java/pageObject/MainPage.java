@@ -54,6 +54,7 @@ public class MainPage {
 
     // Нажать кнопку "Заказать" снизу страницы
     public void purchaseButtonBottomClick() {
+        scrollToPurchaseButtonBottom();
         driver.findElement(purchaseButtonBottom).click();
     }
 
@@ -61,5 +62,18 @@ public class MainPage {
     public void scrollToPurchaseButtonBottom() {
         WebElement element =  driver.findElement(questionsHeader);
         ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", element);
+    }
+
+    // Нажать кнопку "Заказать" в зависиомсти от параметра ее положения
+    public void purchaseButtonClick(String purchaseButtonPosition) {
+        switch (purchaseButtonPosition) {
+            case ("top") :
+                purchaseButtonTopClick();
+                break;
+            case ("bottom") :
+                purchaseButtonBottomClick();
+                break;
+            default: throw new RuntimeException("Button position is incorrect");
+        }
     }
 }

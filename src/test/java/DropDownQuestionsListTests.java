@@ -43,7 +43,7 @@ public class DropDownQuestionsListTests {
     }
 
     @Test
-    public void AnswersTextVisibleTest() {
+    public void answersTextVisibleTest() {
         ChromeOptions options = new ChromeOptions(); // Драйвер для браузера Chrome
         options.addArguments("--no-sandbox", "--disable-dev-shm-usage");
         driver = new ChromeDriver(options);
